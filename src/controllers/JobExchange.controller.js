@@ -50,8 +50,23 @@ async function getJobExchanges(req, res){
     }
 }
 
+async function updateExchange(req, res){
+    let jobExchangeId = req.params.jobExchangeId
+    let updated = req.body
+    try {
+        await JobExchange.findByIdAndUpdate({_id: jobExchangeId}, updated, (err, jobExcahnges)=>{
+            if(err) return res.status(500).send({message: 'An internal server error'})
+            if(!jobExcahnges) return res.status(404).send({message: `canot update this feedback because ${err}`})
+            res.status(200).send({message: 'jobExchange Updated'})
+        })
+    } catch (error) {
+        throw error
+    }
+}
+
 module.exports = {
     saveJobExchange,
     getJobExchange,
-    getJobExchanges
+    getJobExchanges,
+    updateExchange
 }
