@@ -64,9 +64,23 @@ async function updateExchange(req, res){
     }
 }
 
+async function deleteJobExchange(req, res){
+    let jobExchangeId = req.params.jobExchangeId
+    try {
+        await JobExchange.findOneAndDelete({_id: jobExchangeId}, (err, jobExcahnges)=>{
+            if(err) return res.status(500).send({message:'canot delete this jobexchange'})
+            if(!jobExcahnges) return res.status(404).send({message: `this jobExchangeId: ${jobExchangeId} not found`})
+            res.status(200).send({message: 'this jobExchange has been deleted'})
+        })
+    } catch (error) {
+        throw error
+    }
+}
+
 module.exports = {
     saveJobExchange,
     getJobExchange,
     getJobExchanges,
-    updateExchange
+    updateExchange,
+    deleteJobExchange
 }

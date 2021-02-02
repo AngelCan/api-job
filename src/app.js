@@ -4,7 +4,7 @@ const morgan = require('mongoose-morgan')
 const app = express()
 const cors = require('cors')
 const apiJobExchange = require('./routes/jobExchange.route')
-//const authApi = require()
+const authApi = require('./routes/auth.route')
 
 app.use(cors())
 app.use(bodyParser.urlencoded({extended: false}))
@@ -14,5 +14,6 @@ app.use(morgan({
 }))
 
 app.use('/v1', apiJobExchange)
+app.use('/v1', authApi)
 
 module.exports = app
